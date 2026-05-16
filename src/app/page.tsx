@@ -269,6 +269,26 @@ export default function Home() {
     </svg>
   );
 
+  const RobotIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 8V4H8"></path>
+      <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+      <path d="M2 14h2"></path>
+      <path d="M20 14h2"></path>
+      <path d="M15 13v2"></path>
+      <path d="M9 13v2"></path>
+    </svg>
+  );
+
   return (
     <>
       {/* Botón flotante para abrir/cerrar el chat */}
@@ -283,7 +303,7 @@ export default function Home() {
         }}
         title="Chat con Alloatti SRL"
       >
-        <span className="text-2xl sm:text-3xl">🤖</span>
+        <RobotIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
       </button>
 
       {/* Widget del chat con animación - Responsivo */}
@@ -305,7 +325,7 @@ export default function Home() {
             }}
           >
             <div className="flex items-center gap-1.5">
-              <span className="text-xl">🤖</span>
+              <RobotIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               <h1 className="text-base sm:text-lg font-semibold text-white tracking-wide">Alloatti</h1>
               <p className="text-[10px] text-white opacity-85 text-nowrap bg-white/10 px-2 py-0.5 rounded-full font-medium">Gemini AI</p>
               <GeminiIcon />
@@ -323,7 +343,9 @@ export default function Home() {
           <main className="flex-1 overflow-y-auto">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full px-6 py-8">
-                <div className="mb-4 text-5xl sm:text-6xl animate-pulse">🤖</div>
+                <div className="mb-4 animate-pulse text-[#0052cc]">
+                  <RobotIcon className="w-14 h-14 sm:w-16 sm:h-16" />
+                </div>
                 <h2 className="text-lg sm:text-xl font-bold mb-2 text-center" style={{ color: 'var(--gemini-text)' }}>Asistente técnico y comercial</h2>
                 <p className="text-xs sm:text-sm text-center max-w-sm leading-relaxed" style={{ color: 'var(--gemini-text-secondary)' }}>
                   Asesoramiento directo sobre maquinaria industrial de lavado, llenado y tapado de bidones (estándares IVESS/CIMES). Solicite cotizaciones y especificaciones técnicas aquí.
@@ -334,7 +356,7 @@ export default function Home() {
                 {messages.map((msg, index) => (
                   <div key={index} className="mb-5 sm:mb-6 flex gap-2 sm:gap-3">
                     <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center animate-fade-in" style={{ background: msg.role === 'user' ? 'var(--gemini-user-bg)' : 'transparent' }}>
-                      {msg.role === 'user' ? <span className="text-xs font-semibold" style={{ color: 'var(--gemini-user-text)' }}>U</span> : <span className="text-base sm:text-lg">🤖</span>}
+                      {msg.role === 'user' ? <span className="text-xs font-semibold" style={{ color: 'var(--gemini-user-text)' }}>U</span> : <RobotIcon className="w-5 h-5 sm:w-6 sm:h-6 text-[#0052cc]" />}
                     </div>
                     <div className="flex-1 pt-0.5 sm:pt-1 min-w-0">
                       <div className="text-xs font-semibold mb-1 uppercase tracking-wider opacity-70" style={{ color: 'var(--gemini-text-secondary)' }}>{msg.role === 'user' ? 'Cliente' : 'Alloatti'}</div>
@@ -392,7 +414,9 @@ export default function Home() {
                 ))}
                 {isLoading && (
                   <div className="mb-5 sm:mb-6 flex gap-2 sm:gap-3">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center"><span className="text-base sm:text-lg">🤖</span></div>
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                      <RobotIcon className="w-5 h-5 sm:w-6 sm:h-6 text-[#0052cc]" />
+                    </div>
                     <div className="flex-1 pt-0.5 sm:pt-1">
                       <div className="text-xs font-semibold mb-1 opacity-70" style={{ color: 'var(--gemini-text-secondary)' }}>Alloatti</div>
                       <div className="flex gap-1.5 items-center mt-1">
