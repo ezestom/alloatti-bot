@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased -z-10 overflow-hidden`}>
         {children}
       </body>
     </html>
