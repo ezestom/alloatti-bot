@@ -32,7 +32,7 @@
 body {
 	font-family: var(--font-inter), "Google Sans", "Segoe UI", Roboto,
 		sans-serif;
-	background-image: url("/pasteleria.jpg");
+	background-image: transparent;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

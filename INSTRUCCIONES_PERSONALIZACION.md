@@ -1,173 +1,57 @@
-# 🎨 Guía de Personalización - Chatbot Brunette
+# ⚙️ Guía de Personalización - Chatbot Industrial Alloatti SRL
 
-## 📝 Cómo personalizar el contenido del chatbot
+## 📝 Configuración del Contexto de Negocio
 
-### 1. Editar información del negocio
+### 1. Editar Información Institucional
+Modifique el archivo `src/data/alloatti-context.ts` con los siguientes parámetros estructurales:
 
-Abre el archivo `src/data/brunette-context.ts` y modifica:
+#### Información Básica e Identidad:
+- **Nombre:** Asistente Técnico Alloatti SRL
+- **Especialidad:** Diseño y fabricación de maquinaria de última generación para el procesamiento y envasado de agua potable.
+- **Ubicación:** Buenos Aires, Argentina.
+- **Contacto Directo:** +54 9 11 6864-1122 (WhatsApp) / Formulario web vía EmailJS.
 
-#### Información básica:
-```typescript
-- Nombre: Brunette - Mostrador de Antojos
-- Instagram: @brunette.mostradordeantojos
-- Especialidad: Pastelería artesanal y productos dulces y salados
-- Ubicación: Ciudad Autónoma de Buenos Aires, Argentina
-```
+#### Enfoque de Calidad y Normativas:
+El asistente debe validar rigurosamente que toda la maquinaria cumple con los lineamientos de **IVESS** y **CIMES**:
+- Ciclo mínimo de lavado garantizado de 120 segundos.
+- Procesos de lavado exterior rotativo e inyección interna a alta presión.
+- Sistemas de separación de etapas y picos de llenado sin contacto para evitar contaminación cruzada.
 
-#### Horarios:
-```typescript
-HORARIOS:
-- Lunes a Viernes: 9:00 AM - 8:00 PM
-- Sábados: 10:00 AM - 9:00 PM
-- Domingos: 10:00 AM - 6:00 PM
-```
+### 2. Mapeo Taxonómico de Productos (Categorías del Sistema)
+El chatbot segmentará el catálogo industrial mediante cuatro categorías clave para activar la galería automatizada:
 
-### 2. Agregar o modificar productos
+- `retornables`: Modelos automáticos en acero inoxidable para bidones de 10, 12 y 20 litros (Modelos AT-120 a AT-960).
+- `descartables`: Línea especializada para envases de un solo uso de 6, 8 y 10 litros (AT-300D y AT-700D).
+- `accesorios`: Periféricos de automatización (Tolvas, Jirafas, Cargadores, Sacatapas, Módulos IoT HMI y Pre-lavadoras).
+- `todo`: Despliegue completo del catálogo de soluciones de ingeniería.
 
-En el mismo archivo `src/data/brunette-context.ts`:
+### 3. Modelo de Datos del Catálogo (`Product[]`)
+Estructura técnica para la declaración de arrays en `src/data/alloatti-context.ts`:
 
-#### Actualizar precios y productos en el contexto:
-```typescript
-PRODUCTOS DISPONIBLES:
-1. TORTAS Y TARTAS
-   - Torta de Chocolate (chica $8000, mediana $12000, grande $18000)
-   // Agrega o modifica aquí
-```
-
-#### Agregar productos con imágenes:
 ```typescript
 export const PRODUCTS: Product[] = [
   {
-    id: 'mi-nuevo-producto',           // ID único
-    name: 'Nombre del Producto',       // Nombre que se mostrará
-    category: 'tortas',                 // 'tortas' | 'pasteleria' | 'brownies' | 'salados'
-    description: 'Descripción breve',   // Descripción del producto
-    price: '$12000',                    // Precio
-    image: 'https://...'                // URL de la imagen
+    id: 'at-120',
+    name: 'Monobloque Automático AT-120',
+    category: 'retornables',
+    description: 'Capacidad 120 bidones/hora. Tandas de 2 bidones (2 lavado, 1 enjuague, 1 llenado). Construcción íntegra en Acero Inoxidable.',
+    price: 'Consultar Presupuesto',
+    image: '/productos/at-120.jpg'
   },
-  // ... más productos
+  {
+    id: 'at-700d',
+    name: 'Línea Automática Continua AT-700D',
+    category: 'descartables',
+    description: 'Capacidad 700 bidones/hora para descartables (6, 8 y 10L). Lotes de 4 bidones. Incluye jirafa de tapas.',
+    price: 'Consultar Presupuesto',
+    image: '/productos/at-700d.jpg'
+  },
+  {
+    id: 'hmi-iot',
+    name: 'Pantalla HMI & App Conectividad IoT',
+    category: 'accesorios',
+    description: 'Interfaz táctil con conexión RJ45 y aplicación Android para diagnóstico de fallas en vivo y métricas en tiempo real.',
+    price: 'Consultar Presupuesto',
+    image: '/productos/hmi-iot.jpg'
+  }
 ];
-```
-
-### 3. Reemplazar imágenes de ejemplo
-
-Las imágenes actuales son de **Unsplash** (solo para demo). Para usar tus propias imágenes:
-
-#### Opción 1: Subir a Instagram y extraer URLs
-1. Sube las fotos de tus productos a Instagram
-2. Abre la foto en el navegador
-3. Click derecho > "Inspeccionar elemento"
-4. Busca la etiqueta `<img>` y copia la URL del atributo `src`
-5. Pégala en el campo `image` del producto
-
-#### Opción 2: Usar un servicio de hosting de imágenes
-- **Cloudinary** (gratis hasta cierto límite)
-- **ImgBB** (gratis)
-- **Imgur** (gratis)
-
-Sube tus imágenes y copia las URLs.
-
-#### Opción 3: Carpeta pública de Next.js
-1. Crea la carpeta `public/productos/` si no existe
-2. Coloca tus imágenes ahí (ej: `public/productos/torta-chocolate.jpg`)
-3. Usa la ruta: `image: '/productos/torta-chocolate.jpg'`
-
-**IMPORTANTE:** Si usas dominios externos diferentes a Unsplash, agrega el dominio en `next.config.ts`:
-
-```typescript
-images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'images.unsplash.com', // Ya existe
-    },
-    {
-      protocol: 'https',
-      hostname: 'tu-dominio.com', // Agrega aquí
-    },
-  ],
-},
-```
-
-### 4. Categorías de imágenes
-
-El chatbot puede mostrar productos por categoría cuando el cliente pregunta. Las categorías son:
-
-- `tortas` - Muestra tortas y tartas
-- `pasteleria` - Muestra macarons, cookies, alfajores
-- `brownies` - Muestra brownies y chocotorta
-- `salados` - Muestra scones y sandwiches
-- `todo` - Muestra todos los productos
-
-El IA automáticamente entiende cuándo mostrar cada categoría según la pregunta del usuario.
-
-### 5. Personalizar el tono del asistente
-
-En `src/data/brunette-context.ts`, modifica la sección `TU ROL`:
-
-```typescript
-TU ROL:
-- Eres amable, cálido y profesional
-- Brindas información sobre productos, precios y horarios
-// Agrega más instrucciones aquí según tu preferencia
-```
-
-## 🖼️ Ejemplo de cómo agregar un nuevo producto
-
-```typescript
-{
-  id: 'tiramisu',
-  name: 'Tiramisú Casero',
-  category: 'tortas',
-  description: 'Auténtico tiramisú italiano con café y mascarpone',
-  price: '$14000',
-  image: '/productos/tiramisu.jpg'  // o URL externa
-}
-```
-
-## 🎨 Cambiar colores y estilos
-
-Los colores del tema están en `src/app/globals.css`. Busca las variables CSS y modifícalas:
-
-```css
-:root {
-  --gemini-primary: #8e24aa; /* Color principal (morado de Brunette) */
-  --gemini-bg: #f8f9fa;      /* Fondo claro */
-  /* etc... */
-}
-```
-
-## 🚀 Probar los cambios
-
-1. Guarda todos los archivos
-2. El servidor de desarrollo se recargará automáticamente
-3. Prueba preguntando: "¿Qué productos tienen?" o "Muéstrame las tortas"
-
-## 📸 Consejos para las fotos de productos
-
-- Usa buena iluminación
-- Fondo limpio y simple
-- Resolución mínima: 800x800px
-- Formato: JPG o PNG
-- Peso: Menos de 500KB por imagen (optimiza si es necesario)
-
-## ❓ Preguntas frecuentes
-
-**P: ¿Puedo agregar videos en lugar de imágenes?**
-R: Actualmente solo soporta imágenes, pero puedes modificar el código para agregar videos.
-
-**P: ¿Cómo hago para que el chatbot no responda preguntas no relacionadas?**
-R: Ya está configurado en el contexto. El asistente solo responde sobre la pastelería.
-
-**P: ¿Puedo cambiar el límite de productos mostrados?**
-R: Sí, puedes modificar el código en `src/app/page.tsx` en la sección de la galería.
-
-## 🎯 Próximos pasos sugeridos
-
-1. Reemplaza las imágenes de ejemplo con fotos reales de tus productos
-2. Actualiza los precios reales
-3. Agrega más productos según tu catálogo
-4. Prueba diferentes preguntas para asegurarte que el chatbot responde correctamente
-5. Comparte el link de Instagram real para que los clientes puedan hacer pedidos
-
-¡Listo! Tu chatbot está personalizado y listo para ayudar a tus clientes. 🎉

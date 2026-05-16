@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-	BRUNETTE_CONTEXT,
+	ALLOATTI_CONTEXT,
 	getProductsByCategory,
 	Product,
-} from "@/data/brunette-context";
+} from "@/data/alloatti-context";
 
 interface Message {
 	role: string;
@@ -38,14 +38,14 @@ export async function POST(req: NextRequest) {
 		// Agregar el contexto del negocio al inicio de la conversación
 		const systemMessage = {
 			role: "user",
-			parts: [{ text: BRUNETTE_CONTEXT }],
+			parts: [{ text: ALLOATTI_CONTEXT }],
 		};
 
 		const firstUserMessage = {
 			role: "model",
 			parts: [
 				{
-					text: "Entendido. Soy el asistente de Brunette y responderé solo sobre nuestros productos y servicios.",
+					text: "Entendido. Soy el asistente técnico-comercial de Alloatti SRL y responderé sobre nuestras soluciones industriales y periféricos de envasado.",
 				},
 			],
 		};
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
 
 		// Procesar si hay etiquetas de imagen en la respuesta
 		let images = null;
-		const imageMatches = text.match(/\[IMAGEN:(\w+)\]/g);
+		const imageMatches = text.match(/\[IMAGEN:([\w-]+)\]/g);
 
 		if (imageMatches) {
 			console.log("🖼️ Etiquetas de imagen encontradas:", imageMatches);
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
 			// Extraer categorías únicas
 			const categories = imageMatches
 				.map((match: string) => {
-					const categoryMatch = match.match(/\[IMAGEN:(\w+)\]/);
+					const categoryMatch = match.match(/\[IMAGEN:([\w-]+)\]/);
 					return categoryMatch ? categoryMatch[1] : null;
 				})
 				.filter(Boolean);
@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
 			}
 
 			// Eliminar las etiquetas del texto
-			text = text.replace(/\[IMAGEN:\w+\]/g, "").trim();
+			text = text.replace(/\[IMAGEN:[\w-]+\]/g, "").trim();
 		}
 
 		return NextResponse.json({

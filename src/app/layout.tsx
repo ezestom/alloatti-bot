@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import type { Viewport } from "next";
+
 // Google Sans alternative - usando Inter que es similar
 const inter = Inter({
   subsets: ["latin"],
@@ -9,16 +11,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Brunette - Gemini AI",
-  description: "Chat con Google Gemini AI",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover",
-    interactiveWidget: "resizes-content", // Importante: ajusta el contenido cuando aparece el teclado
-  },
+  title: "Alloatti SRL - Líder en Innovación",
+  description: "Chatbot de asistencia técnica y cotización comercial para Alloatti SRL",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content", // Importante: ajusta el contenido cuando aparece el teclado
 };
 
 export default function RootLayout({

@@ -39,7 +39,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [recognition, setRecognition] = useState<SpeechRecognitionType | null>(null);
   const [voiceError, setVoiceError] = useState<string>('');
-  const [isOpen, setIsOpen] = useState(false); // Estado del widget (abierto/cerrado)
+  const [isOpen, setIsOpen] = useState(true); // Estado del widget (abierto por defecto en iframe)
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -276,14 +276,14 @@ export default function Home() {
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 hover:cursor-pointer"
         style={{
-          background: 'linear-gradient(135deg, #8e24aa 0%, #d81b60 100%)',
+          background: 'linear-gradient(135deg, #004899 0%, #0076f6 100%)',
           transform: isOpen ? 'scale(0)' : 'scale(1)',
           opacity: isOpen ? 0 : 1,
           pointerEvents: isOpen ? 'none' : 'auto',
         }}
-        title="Chat con Brunette"
+        title="Chat con Alloatti SRL"
       >
-        <span className="text-2xl sm:text-3xl">🧁</span>
+        <span className="text-2xl sm:text-3xl">🤖</span>
       </button>
 
       {/* Widget del chat con animación - Responsivo */}
@@ -299,20 +299,20 @@ export default function Home() {
           <header
             className="border-b flex items-center justify-between px-4 py-3 sm:py-3"
             style={{
-              background: 'linear-gradient(135deg, #8e24aa 0%, #d81b60 100%)',
+              background: 'linear-gradient(135deg, #004899 0%, #0076f6 100%)',
               borderColor: 'transparent',
               minHeight: '56px'
             }}
           >
-            <div className="flex items-center gap-1">
-              <span className="text-xl">🧁</span>
-              <h1 className="text-base sm:text-lg font-medium text-white">Brunette</h1>
-              <p className="text-[10px] text-white opacity-85 text-nowrap">Powered by Google </p>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xl">🤖</span>
+              <h1 className="text-base sm:text-lg font-semibold text-white tracking-wide">Alloatti</h1>
+              <p className="text-[10px] text-white opacity-85 text-nowrap bg-white/10 px-2 py-0.5 rounded-full font-medium">Gemini AI</p>
               <GeminiIcon />
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full hover:bg-white/25 hover:bg-opacity-20 flex items-center justify-center transition-colors flex-shrink-0"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full hover:bg-white/25 hover:bg-opacity-20 flex items-center justify-center transition-colors flex-shrink-0 hover:cursor-pointer"
               title="Cerrar chat"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -322,54 +322,66 @@ export default function Home() {
           </header>
           <main className="flex-1 overflow-y-auto">
             {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full px-4">
-                <div className="mb-3 sm:mb-4 text-5xl sm:text-6xl">🧁</div>
-                <h2 className="text-xl sm:text-2xl font-normal mb-2 text-center" style={{ color: 'var(--gemini-text)' }}>¿En qué puedo ayudarte?</h2>
-                <p className="text-sm text-center" style={{ color: 'var(--gemini-text-secondary)' }}>
-                  Te puedo acompañar a descubrir nuestros deliciosos productos de pastelería artesanal. Pregúntame sobre nuestros dulces, precios, horarios o cómo hacer un pedido. ¡Estoy aquí para ayudarte a endulzar tu día! 🍰🎂
+              <div className="flex flex-col items-center justify-center h-full px-6 py-8">
+                <div className="mb-4 text-5xl sm:text-6xl animate-pulse">🤖</div>
+                <h2 className="text-lg sm:text-xl font-bold mb-2 text-center" style={{ color: 'var(--gemini-text)' }}>Asistente técnico y comercial</h2>
+                <p className="text-xs sm:text-sm text-center max-w-sm leading-relaxed" style={{ color: 'var(--gemini-text-secondary)' }}>
+                  Asesoramiento directo sobre maquinaria industrial de lavado, llenado y tapado de bidones (estándares IVESS/CIMES). Solicite cotizaciones y especificaciones técnicas aquí.
                 </p>
               </div>
             ) : (
               <div className="px-3 sm:px-4 py-4 sm:py-6">
                 {messages.map((msg, index) => (
                   <div key={index} className="mb-5 sm:mb-6 flex gap-2 sm:gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center" style={{ background: msg.role === 'user' ? 'var(--gemini-user-bg)' : 'transparent' }}>
-                      {msg.role === 'user' ? <span className="text-xs font-medium" style={{ color: 'var(--gemini-user-text)' }}>U</span> : <span className="text-base sm:text-lg">🧁</span>}
+                    <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center animate-fade-in" style={{ background: msg.role === 'user' ? 'var(--gemini-user-bg)' : 'transparent' }}>
+                      {msg.role === 'user' ? <span className="text-xs font-semibold" style={{ color: 'var(--gemini-user-text)' }}>U</span> : <span className="text-base sm:text-lg">🤖</span>}
                     </div>
                     <div className="flex-1 pt-0.5 sm:pt-1 min-w-0">
-                      <div className="text-xs font-medium mb-1" style={{ color: 'var(--gemini-text-secondary)' }}>{msg.role === 'user' ? 'Tú' : 'Brunette'}</div>
+                      <div className="text-xs font-semibold mb-1 uppercase tracking-wider opacity-70" style={{ color: 'var(--gemini-text-secondary)' }}>{msg.role === 'user' ? 'Cliente' : 'Alloatti'}</div>
                       <div className="whitespace-pre-wrap leading-relaxed text-sm break-words" style={{ color: 'var(--gemini-text)' }}>
                         {renderMessageWithLinks(msg.content)}
                       </div>
 
                       {/* Mostrar galería de productos si existen */}
                       {msg.images && msg.images.length > 0 && (
-                        <div className="mt-2 sm:mt-3 grid grid-cols-1 gap-2 sm:gap-3">
+                        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                           {msg.images.map((product) => (
                             <div
                               key={product.id}
-                              className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                              className="border rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex flex-col justify-between"
                               style={{ borderColor: 'var(--gemini-border)', background: 'var(--gemini-surface)' }}
                             >
-                              <div className="relative w-full h-28 sm:h-32">
-                                <Image
-                                  src={product.image}
-                                  alt={product.name}
-                                  fill
-                                  className="object-cover"
-                                  sizes="(max-width: 640px) 100vw, 400px"
-                                />
+                              <div>
+                                <div className="relative w-full h-28 sm:h-32 bg-gray-100">
+                                  <Image
+                                    src={product.image}
+                                    alt={product.name}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 640px) 100vw, 400px"
+                                  />
+                                </div>
+                                <div className="p-3">
+                                  <h3 className="font-bold text-sm mb-1 line-clamp-1" style={{ color: 'var(--gemini-text)' }}>
+                                    {product.name}
+                                  </h3>
+                                  <p className="text-xs mb-1 line-clamp-2" style={{ color: 'var(--gemini-text-secondary)' }}>
+                                    {product.description}
+                                  </p>
+                                </div>
                               </div>
-                              <div className="p-2.5 sm:p-3">
-                                <h3 className="font-semibold text-sm mb-0.5 sm:mb-1" style={{ color: 'var(--gemini-text)' }}>
-                                  {product.name}
-                                </h3>
-                                <p className="text-xs mb-1 line-clamp-2" style={{ color: 'var(--gemini-text-secondary)' }}>
-                                  {product.description}
-                                </p>
-                                <p className="font-bold text-sm" style={{ color: '#8e24aa' }}>
+                              <div className="p-3 pt-0 flex justify-between items-center border-t border-dashed" style={{ borderColor: 'var(--gemini-border)' }}>
+                                <p className="font-extrabold text-sm" style={{ color: '#0052cc' }}>
                                   {product.price}
                                 </p>
+                                <a
+                                  href={`https://wa.me/5491168641122?text=Hola!%20Vengo%20del%20chatbot%20e%20interesaría%20solicitar%20una%20cotización%20técnico-comercial%20del%20modelo%20${encodeURIComponent(product.name)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[10px] bg-[#0052cc] text-white px-2.5 py-1 rounded-md font-bold hover:bg-[#0046a0] transition-colors"
+                                >
+                                  Cotizar
+                                </a>
                               </div>
                             </div>
                           ))}
@@ -380,11 +392,11 @@ export default function Home() {
                 ))}
                 {isLoading && (
                   <div className="mb-5 sm:mb-6 flex gap-2 sm:gap-3">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center"><span className="text-base sm:text-lg">🧁</span></div>
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center"><span className="text-base sm:text-lg">🤖</span></div>
                     <div className="flex-1 pt-0.5 sm:pt-1">
-                      <div className="text-xs font-medium mb-1" style={{ color: 'var(--gemini-text-secondary)' }}>Brunette</div>
-                      <div className="flex gap-1">
-                        {[0, 0.2, 0.4].map((delay, i) => (<div key={i} className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: `${delay}s` }}></div>))}
+                      <div className="text-xs font-semibold mb-1 opacity-70" style={{ color: 'var(--gemini-text-secondary)' }}>Alloatti</div>
+                      <div className="flex gap-1.5 items-center mt-1">
+                        {[0, 0.2, 0.4].map((delay, i) => (<div key={i} className="w-2.5 h-2.5 rounded-full bg-blue-500/70 animate-bounce" style={{ animationDelay: `${delay}s` }}></div>))}
                       </div>
                     </div>
                   </div>
@@ -393,7 +405,7 @@ export default function Home() {
               </div>
             )}
           </main>
-          <footer className="border-t safe-area-bottom" style={{ background: 'var(--gemini-surface)', borderColor: 'var(--gemini-border)' }}>
+          <footer className="border-t safe-area-bottom shadow-lg" style={{ background: 'var(--gemini-surface)', borderColor: 'var(--gemini-border)' }}>
             <div className="px-3 sm:px-4 py-2.5 sm:py-3">
               {/* Mostrar error de voz si existe */}
               {voiceError && (
@@ -412,40 +424,17 @@ export default function Home() {
                       setMessage(e.target.value);
                       setVoiceError(''); // Limpiar error al escribir
                     }}
-                    placeholder={isRecording ? 'Escuchando...' : 'Escribe tu mensaje...'}
+                    placeholder={isRecording ? 'Escuchando...' : 'Escribe tu consulta técnica...'}
                     disabled={isLoading || isRecording}
-                    className="flex-1 bg-transparent outline-none px-3 sm:px-4 py-2 sm:py-2.5 text-sm min-w-0"
+                    className="flex-1 bg-transparent outline-none px-4 py-2.5 text-sm min-w-0"
                     style={{ color: 'var(--gemini-text)' }}
                   />
-
-                  {/* Botón de micrófono */}
-                  {/* <button
-                    type="button"
-                    onClick={toggleRecording}
-                    disabled={isLoading}
-                    className="p-1.5 sm:p-2 rounded-full transition-all disabled:opacity-50 hover:bg-opacity-10 hover:bg-gray-500 flex-shrink-0"
-                    style={{
-                      background: isRecording ? '#ea4335' : 'transparent',
-                    }}
-                    title={isRecording ? 'Detener grabación' : 'Grabar audio'}
-                  >
-                    {isRecording ? (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" className="sm:w-5 sm:h-5">
-                        <rect x="6" y="6" width="12" height="12" rx="2" />
-                      </svg>
-                    ) : (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5">
-                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" fill="var(--gemini-text-secondary)" />
-                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" fill="var(--gemini-text-secondary)" />
-                      </svg>
-                    )}
-                  </button> */}
 
                   <button
                     type="submit"
                     disabled={isLoading || !message.trim()}
-                    className="mr-1.5 sm:mr-2 p-1.5 sm:p-2 rounded-full transition-colors disabled:opacity-50 flex-shrink-0"
-                    style={{ background: message.trim() && !isLoading ? '#8e24aa' : 'transparent' }}
+                    className="mr-1.5 sm:mr-2 p-2 rounded-full transition-all disabled:opacity-50 flex-shrink-0"
+                    style={{ background: message.trim() && !isLoading ? '#0052cc' : 'transparent' }}
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" className="sm:w-5 sm:h-5"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill={message.trim() && !isLoading ? '#fff' : 'var(--gemini-text-secondary)'} /></svg>
                   </button>
