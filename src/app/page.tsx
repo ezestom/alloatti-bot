@@ -39,7 +39,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false);
   const [recognition, setRecognition] = useState<SpeechRecognitionType | null>(null);
   const [voiceError, setVoiceError] = useState<string>('');
-  const [isOpen, setIsOpen] = useState(true); // Estado del widget (abierto por defecto en iframe)
+  const [isOpen, setIsOpen] = useState(false); // Estado del widget (cerrado por defecto)
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -294,7 +294,7 @@ export default function Home() {
       {/* Botón flotante para abrir/cerrar el chat */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 hover:cursor-pointer"
+        className="fixed right-4 w-12 h-12 bottom-14 sm:bottom-8 sm:w-12 sm:h-12 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 hover:cursor-pointer"
         style={{
           background: 'linear-gradient(135deg, #004899 0%, #0076f6 100%)',
           transform: isOpen ? 'scale(0)' : 'scale(1)',
